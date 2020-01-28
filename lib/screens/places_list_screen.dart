@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,9 +21,25 @@ class PlacesListScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Center(
-        child: CircularProgressIndicator(),
-      ),
+      body: Consumer<GreatPlaces>(
+          builder: (ctx, greatPlace, ch) => greatPlace.items.length <= 0
+              ? ch
+              : ListView.builder(
+                  itemCount: greatPlace.items.length,
+                  itemBuilder: (ctx, i) => ListTile(
+                    onTap: (){},
+                    title: Text(greatPlace.items[i].title),
+                    leading: CircleAvatar(
+                      backgroundImage: FileImage(greatPlace.items[i].image),
+                    ),
+                  ),
+                ),
+          child: Center(
+            child: Text(
+              'No saved places available',
+              textAlign: TextAlign.center,
+            ),
+          )),
     );
   }
 }

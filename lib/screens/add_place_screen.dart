@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/great_places.dart';
 import '../components/image_input.dart';
 
 class AddPlaceScreen extends StatefulWidget {
@@ -10,10 +14,23 @@ class AddPlaceScreen extends StatefulWidget {
 
 class _AddPlaceScreenState extends State<AddPlaceScreen> {
   final _textController = TextEditingController();
+  File _savedImage;
   @override
   void dispose() {
     _textController.dispose();
     super.dispose();
+  }
+
+  void _getImage(File image) {
+    _savedImage = image;
+  }
+
+  void _addPlace() {
+    if (_textController.text.isEmpty || _savedImage == null) {
+      return;
+    }
+    Provider.of<GreatPlaces>(context, listen: false)
+        .addPlace(_textController.text, _savedImage);
   }
 
   @override
@@ -28,7 +45,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: <Widget>[
                     TextField(
@@ -40,17 +57,21 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                         ),
                       ),
                     ),
-                    ImageInput(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ImageInput(_getImage),
                   ],
                 ),
               ),
             ),
           ),
           RaisedButton.icon(
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             color: Theme.of(context).accentColor,
             icon: Icon(Icons.add),
             label: Text('Add Place'),
-            onPressed: () {},
+            onPressed: _addPlace,
           ),
         ],
       ),
