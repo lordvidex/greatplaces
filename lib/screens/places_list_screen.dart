@@ -21,25 +21,38 @@ class PlacesListScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Consumer<GreatPlaces>(
-          builder: (ctx, greatPlace, ch) => greatPlace.items.length <= 0
-              ? ch
-              : ListView.builder(
-                  itemCount: greatPlace.items.length,
-                  itemBuilder: (ctx, i) => ListTile(
-                    onTap: (){},
-                    title: Text(greatPlace.items[i].title),
-                    leading: CircleAvatar(
-                      backgroundImage: FileImage(greatPlace.items[i].image),
-                    ),
+      body: FutureBuilder(
+          future: Provider.of<GreatPlaces>(context, listen: false)
+              .fetchAndSetPlaces(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(child: Text('An error occured!'));
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return Consumer<GreatPlaces>(
+                builder: (ctx, greatPlace, ch) => greatPlace.items.length <= 0
+                    ? ch
+                    : ListView.builder(
+                        itemCount: greatPlace.items.length,
+                        itemBuilder: (ctx, i) => ListTile(
+                          onTap: () {},
+                          title: Text(greatPlace.items[i].title),
+                          leading: CircleAvatar(
+                            backgroundImage:
+                                FileImage(greatPlace.items[i].image),
+                          ),
+                        ),
+                      ),
+                child: Center(
+                  child: Text(
+                    'No saved places available',
+                    textAlign: TextAlign.center,
                   ),
                 ),
-          child: Center(
-            child: Text(
-              'No saved places available',
-              textAlign: TextAlign.center,
-            ),
-          )),
+              );
+            }
+          }),
     );
   }
 }
