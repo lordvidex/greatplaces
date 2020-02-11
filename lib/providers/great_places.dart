@@ -12,7 +12,7 @@ class GreatPlaces extends ChangeNotifier {
     return [..._items];
   }
 
-  void addPlace(String title, File image) async{
+  Future<void> addPlace(String title, File image) async{
     final newPlace = Place(
         id: DateTime.now().toString(),
         image: image,

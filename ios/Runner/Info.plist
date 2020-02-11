@@ -15,11 +15,15 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Click on an Image</string>
+	<string>Select an Image</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Take a picture</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Use the microphone</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location is in use</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Location is always in use</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
