@@ -6,6 +6,9 @@ final String tableName = 'user_places';
 final String columnId = '_id';
 final String columnTitle = 'title';
 final String columnImage = 'image';
+final String columnLat = 'latitude';
+final String columnLng = 'longitude';
+final String columnAddress = 'address';
 
 class DBHelper {
   static Future<Database> database() async {
@@ -16,7 +19,7 @@ class DBHelper {
       version: 1,
       onCreate: (db, vers) async {
         await db.execute(
-            'CREATE TABLE $tableName ($columnId TEXT PRIMARY KEY, $columnTitle TEXT NOT NULL, $columnImage TEXT)');
+            'CREATE TABLE $tableName ($columnId TEXT PRIMARY KEY, $columnTitle TEXT NOT NULL, $columnImage TEXT, $columnLat REAL, $columnLng REAL, $columnAddress TEXT)');
       },
     );
   }
