@@ -8,9 +8,9 @@ final String columnTitle = 'title';
 final String columnImage = 'image';
 
 class DBHelper {
-  static Future<Database> database() async{
+  static Future<Database> database() async {
     final dbPath = await getDatabasesPath();
-    
+
     return openDatabase(
       path.join(dbPath, dbName),
       version: 1,
@@ -20,12 +20,15 @@ class DBHelper {
       },
     );
   }
+
   static Future<dynamic> insert(Map<String, Object> data) async {
     Database db = await DBHelper.database();
-    var id = await db.insert(tableName, data, conflictAlgorithm: ConflictAlgorithm.replace);
+    var id = await db.insert(tableName, data,
+        conflictAlgorithm: ConflictAlgorithm.replace);
     return id;
   }
-  static Future<List<Map<String, dynamic>>> getData()async {
+
+  static Future<List<Map<String, dynamic>>> getData() async {
     Database db = await DBHelper.database();
     return db.query(tableName);
   }
