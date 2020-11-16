@@ -13,6 +13,10 @@ class GreatPlaces extends ChangeNotifier {
     return [..._items];
   }
 
+  Place findPlaceById(String id) {
+    return _items.firstWhere((element) => element.id == id);
+  }
+
   Future<void> addPlace(
       String title, File image, PlaceLocation location) async {
     final locationAddress = await LocationHelper.getPlaceAddress(
